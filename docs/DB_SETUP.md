@@ -13,7 +13,9 @@ docker compose exec db psql -U postgres -d postgres \
   -f /path/to/0001_art_finance.sql
 ```
 
-Файлы: `supabase/migrations/0001_art_finance.sql`, затем `0002_transactions_report.sql`.
+Файлы из `supabase/migrations/` — строго по порядку, от `0001` до `0006`.
+Миграции не идемпотентны: каждую применять один раз. После миграций, которые
+меняют RPC, обновить кэш схемы PostgREST: `notify pgrst, 'reload schema';`.
 
 **Перед 0002** сверить схему багета (имена колонок даты/суммы и значения статусов
 в `public.orders` — в ТЗ они помечены как предположение):
